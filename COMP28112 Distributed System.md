@@ -1,0 +1,520 @@
+# Distributed System
+
+## Week1 .Introduction to Distributed Systems
+
+### 1. The Evolution of Computer Systems
+
+• From 1945 to 1985 
+
+• Computers were **large and expensive**. 
+
+• It was not possible to **connect computers**, so they operated independently from one another.
+
+• From 1985 
+
+• Advances in technology began to change that situation, including:
+
+ • the development of powerful **microprocessors**,
+
+ • the invention of high-speed **computer networks**, and
+
+ • the **miniaturization** of computer systems.
+
+ • The result of these technologies is that it is, now, **possible and relatively easy to put together a computing system composed of large numbers of networked computers, large or small.**
+
+### 2.Examples of Distributed Systems
+
+• The **Web** over the Internet 
+
+• Documents, email, media, commerce, etc. 
+
+• **Mobile telephony** 
+
+• Calls, texts, location, sensing, etc. 
+
+• Electronic funds transfer
+
+• Banking, credit cards, etc. 
+
+• **Instant messaging** 
+
+• Video conferencing 
+
+• Home entertaining systems 
+
+• **Global positioning systems** 
+
+• Etc.
+
+
+
+
+
+### 3.Why Distributed Systems?
+
+ **• To share resources:** 
+
+• One publisher, many beneficiaries! 
+
+**• To bind customers and suppliers** 
+
+• “Go ahead, tell us what you want, we’ll sell it!” 
+
+• “This is what we want, if you have it, we’ll buy it!” 
+
+**• To allow us to do things we could not otherwise do, due to performance, scalability, reliability and availability issues.** 
+
+• **Performance issues**: e.g., if using 1 computer, it takes 60 minutes, I’ll use 100 computers and it will take 0.6 minutes! 
+
+• **Scalability issues**: e.g., if there’s 10 times more to do in the 0.6 minutes I have, I’ll use 1,000 computers, then, if it things quieten down again, I’ll go back to using 100 computers! 
+
+• **Reliability and availability issues**: e.g., if 1% of computers fails every day, add an extra 1% to keep the 0.6 stable and on! 
+
+In other words: 
+
+• To make continuously-evolving, remote resources accessible for **sharing.** 
+
+• To open proprietary processes to external interaction in order to foster **cooperation.** 
+
+• To achieve better **performance/cost** ratios. 
+
+• To **scale** effectively and efficiently if **demand for resources changes** significantly. 
+
+• To **scale** through modular, incremental **expansion and contraction**. 
+
+• To achieve high levels of **reliability** and **availability**
+
+
+
+
+
+### 4.What is a Distributed System?
+
+“A distributed system is a collection of autonomous **computing elements** that appears to its users as a **single coherent system**”
+
+Where: 
+
+• A computing element or a **node**, can be either a **hardware** device or a **software process**. 
+
+• Note that a node can be anything from a high-performance mainframe computer to a small device in a sensor network. Also, nodes can be interconnected in anyway. 
+
+• In a single coherent system, users (i.e., people or applications) believe they are dealing with a single system.
+
+• Note that, for this to be possible, the **autonomous nodes** need to collaborate. The way in which this collaboration is established represents the most fundamental property that distinguishes between different distributed systemsthat distinguishes between different distributed systems.
+
+• Nodes are programmed to achieve common goals, and they do this by **exchanging messages** with each other. 
+
+• To appear to users as a single coherent system, **distribution transparency** is an important goal of distributed systems.
+
+As a consequence, each node will have its own notion of time
+
+In addition, in distributed systems: 
+
+• Computation is concurrent 
+
+​		• There is **more than one application running**. 
+
+• There is no shared state. 
+
+​			• There is **no single global clock** that all programs can agree to follow. 
+
+• **Failures occur** and we may not know or be told about them
+
+• Communication events have non-negligible duration. 
+
+• Communication costs may become more significant than processing time. 
+
+• Components may exchange data at variable rates.
+
+• Uncertainty as to when and how long is always present.
+
+ • Different components process data at **different rates**. 
+
+• Asynchrony (i.e., non-aligned timelines) is unavoidable.
+
+### 5.Fallacies about Distributed Systems
+
+***“Distributed systems differ from traditional software because components are dispersed across a network. Not taking this dispersion into account during design time is what makes so many systems needlessly complex and results in flaws that need to be patched later on”.***
+
+• When working at Sun Microsystems, Peter Deutsch formulated the following false assumptions that are commonly made when developing a distributed application for the first time: 
+
+1. The network is reliable 
+2. The network is secure 
+3. The network is homogeneous 
+4. The topology does not change 
+5.  Latency is zero 
+6. Bandwidth is infinite 
+7. Transport cost is zero 
+8. There is one administrator
+
+####   Fallacy 1: The Network is Reliable
+
+• The way in which nodes of a distributed system are linked (a.k.a. network topology) may vary. 
+
+• A distributed system is composed of different and varied (i.e., heterogeneous) resources (**software and hardware**), which are deployed by different people/organisations. 
+
+• In essence, the result is a network of networks, each managed with local scope by a different group of administrators 
+
+• As a consequence, no (sufficiently complex to be useful) network of networks is reliable
+
+#### Fallacy 2: The Network is Secure
+
+“In case you landed from another planet, the network is far from being secured ” (common wisdom) 
+
+• The Implications: 
+
+• You may need to build security into your applications from Day 1. 
+
+• As a result of security considerations, you might not be able to access networked resources, different user accounts may have different privileges, and so on…
+
+
+
+#### Fallacy 3: The Network is Homogeneous
+
+• A homogeneous network today is the exception, not the rule! 
+
+• Even a home network may connect a Linux PC and a Windows PC. 
+
+• Implications: 
+
+• Interoperability will be needed. 
+
+• And so, the use of standard technologies (not proprietary protocols), such as XML (a W3C recommended generalpurpose markup language) or JSON will be necessary. 
+
+
+
+#### Fallacy 4: Topology doesn’t Change
+
+• The topology doesn’t change as long as we stay in the lab! 
+
+• In the wild, servers may be added and removed often, clients (laptops, wireless ad hoc networks) are coming and going: the topology is changing constantly. 
+
+• The implications:
+
+• Do not rely on specific endpoints or routes. 
+
+• Abstract from the physical structure of the network, by (using the most obvious example) using DNS names as opposed to IP addresses (which may vary) for referring to an endpoint.
+
+
+
+#### Fallacy 5: Latency is Zero
+
+• The minimum round-trip time between two points on earth is determined by the maximum speed of information transmission: the speed of light. 
+
+• At 300,000 km/sec, it will take at least 30msec to send a ping from Europe to the USA and back. 
+
+• The implications: 
+
+• You may think all is ok if you deploy your application on LANs, but you should strive to make as few calls over the network as possible (and transfer as much data out in each of these calls).
+
+#### Fallacy 6: Bandwidth is Infinite
+
+• Bandwidth trends show that it constantly grows, but so does the amount of information we are trying to squeeze through it! 
+
+• E.g., videos, audio, photographs, messages, … 
+
+• To avoid congestion and increase connection throughput, the loss of data packets being transmitted from one point to another can be performed. 
+
+• To avoid packet loss, we may want to use larger packet sizes. 
+
+• The implications: 
+
+• Data compression; try to simulate the production environment to get an estimate for your needs.
+
+#### Fallacy 7: Transport Cost is Zero
+
+• Going from the application layer to the transport layer (2nd highest in the five layer TCP/IP reference model for network communication) is not free: 
+
+• Information needs to be serialised (by marshalling) to get data onto the wire. 
+
+• The cost (in terms of money) for setting and running the network is not zero. Have we leased, for instance, the necessary bandwidth?
+
+#### Fallacy 8: There is One Administrator
+
+• Unless we refer to a small LAN, there will be different administrators associated with the network with different degrees of expertise. 
+
+• Might make it difficult to locate problems (is it their problem or ours?) 
+
+• Coordination of upgrades: will the new version of MySql work as before with Ruby on Rails? 
+
+• Don’t underestimate the ‘human’ (‘social’) factor!
+
+
+
+### 6.Distributed Systems Organisation
+
+ • To assist the development of distributed applications, distributed systems are often organized to have a separate layer of software that is logically placed on top of the respective operating systems of the computers that are part of the system. 
+
+• This separate layer is called middle layer and offers each application the same interface as well as the following: 
+
+• Facilities for inter-application communication. 
+
+• Security services. 
+
+• Support for transaction management. 
+
+• Recovery from failures. 
+
+• Support for Web services composition. 
+
+• Etc.
+
+![image-20230203020319475](C:\Users\38673\AppData\Roaming\Typora\typora-user-images\image-20230203020319475.png)
+
+### 7.Designed for Transparency
+
+![image-20230203020627089](C:\Users\38673\AppData\Roaming\Typora\typora-user-images\image-20230203020627089.png)
+
+
+
+### Week 2 .Introduction to Basic Concepts: Synchronization
+
+### 2.1 Synchronization  同步
+
+  同步（**Synchronization**） 分为两种 进程同步（**Process Synchronization**） 和  数据同步（**Data Synchronization** ）
+
+
+
+#### 2.1.1 **进程同步**（Process Synchronization）
+
+**进程同步**是指多个流程需要一起行动，以实现某种总体目的。
+
+#### 2.1.2 数据同步 （Data Synchronization）
+
+**数据同步**是指在不同副本的位置上，保持数据集的多个副本之间的一致性。
+的一致性，因为各个副本位于不同的节点上。
+在不同的节点上。
+
+*例如，当你将移动设备与笔记本电脑 "同步"，来回复制照片时，这就是一种数据同步。*
+
+
+
+*“**Synchronisation** between **processes** requires **fast** and **reliable communication** between the processes”*
+
+**而在分布式系统中这些交流的过程往往都不是安全的，这给分布式系统带来了很大的挑战**
+
+
+
+Synchronization is needed specially when …
+
+
+
+<img src="https://s2.loli.net/2023/02/21/PjOma2JeQkrSRbh.png" alt="1676917508232" style="zoom:67%;" />
+
+
+
+进程P送到G的 m1 和 进程Q 送到 G的m2 是有**先后顺序**的，所以多进程需要满足event发生的顺序
+
+如果P和Q同时访问G的话，Q和P是不能同时获取G里的数据的，必须保证一个访问时另一个没有访问
+
+
+
+#### 2.2.3 分布式系统中的同步化难题（Synchronization Challenges in Distributed Systems）
+
+
+
+- 分布式系统中的节点往往都是网络连接的，**网络没那么可靠**
+
+  
+
+*例如，同一消息发送到不同的节点可能需要不同的时间间隔才能到达每个节点。*
+*抵达每个节点；如果向同一个节点发送多次，它可能需要不同的时间来* 
+*如果向同一个节点发送多次，它可能需要不同的时间才能到达该节点，或者有时它可能根本就没有到达。*
+
+
+
+- 没有办法确切地知道一个消息需要多长时间才能到达目的地
+
+
+
+- 另一种方法是在信息发出时给它打上时间戳，
+
+  但是，由于没有办法知道该信息花了多长时间到达目的地.
+
+  除非收件人的时钟与发件人的时钟首先是同步的。
+  这一点无法保证，因为节点是独立的。
+
+
+
+- 事实上，关于两个具有独立时钟的节点，唯一可以肯定的是 
+  信息不会在发送前到达目的地。
+
+
+
+Example 1: Obtaining the Ordering of Events
+
+![1676918419600](https://s2.loli.net/2023/02/21/6oR4sZhvISAk8un.png)
+
+p2  ->   q2 ， q3  -> p4 ， p4 -> p5，所以 q3 -> p5
+
+p1 -> p2 ，  p1 -> q2  
+
+
+
+这里的话，我们没办法判断p3是在q2之前发生，也没办法判断q2是在q3之前发生，所说说p3和q2并发
+
+
+
+ 如果a和b事件在同一过程中，并且a发生在b之前，那么a->b 是真的。
+
+
+
+如果a是一个进程发送消息的事件，而b是另一个进程接收消息的事件，那么a->b也是真的。
+的事件，那么a->b也是真的。
+
+**一条消息不可能在发送之前被接收，甚至不可能在发送的同时被接收。**
+
+Happens-before（->）是一个递归关系，所以如果a->b and b->c,则a -> c
+
+两个事件，x和y，发生在**不同的进程**中，它们**不交流** 
+讯息（甚至不通过第三方间接交换），那么x->y就不是真的，但y->x也不是真的。
+
+但y->x也不是。这些事件被说成是**并发**(Concurrent)的，这只是 
+意味着不能说（或不需要说）这些事件是什么时候发生的 发生或哪个事件先发生。
+
+这可以理解为 "事件a发生在事件b之前"。
+
+
+
+### 2.3 逻辑钟 (Logical Clocks)
+
+
+
+“*Logical clocks take advantage of the fact that an **implicit partial** ordering of events can be obtained from the simple sending and receiving of messages between processes in a distributed system. As such, they do not measure “real time” but, instead, provide a distributed incremental pseudo time to events in a distributed system.*”
+
+
+
+逻辑 发挥考虑了隐藏顺序的的优点，用事件收发带来的逻辑顺序从而推断出来部分event发生的顺序
+
+
+
+一个典型的例子就是 **Lamport Logic Clocks**
+
+
+
+
+
+1. 每个事件对应一个Lamport时间戳，初始值为0
+2. 如果事件在节点内发生，本地进程中的时间戳加1
+3. 如果事件属于发送事件，本地进程中的时间戳加1并在消息中带上该时间戳
+4. 如果事件属于接收事件，本地进程中的时间戳 = Max(本地时间戳，消息中的时间戳) + 1
+
+
+
+我们假设每个进程 i 都有一个时间戳 LCi，每当event发生时，LCi就递增1 ，如果 进程 X 给 Y 发了消息的话，它同时也会把他的 时间戳LCx也发过去
+
+如果 Y 的 LCy 在Y接受到消息之前就收到了LCx的时间戳增加了1 ，那么他就保持不变， 如果在Y之后的话则＋1
+
+```python
+if LCy < LCx +1 
+   LCy = LCx +1
+```
+
+![1676933825278](https://s2.loli.net/2023/02/21/yhxjFD9LkvdWMHr.png)
+
+X1时，X1的时间戳为 LCx =0，X1执行发送操作，发送自身时间戳LCx=LCx+1=1，Y1接受了LCx=1，这里我们能确定的是 X发送操作发生在Y操作之前，所以Y的时间是大于LCx的，所以LCy = LCx+1=2
+
+
+
+我们只能用 a-> b 推出 LCa < LCb 不能反过来推
+
+
+
+
+
+
+
+假设有事件a、b，C(a)、C(b) 分别表示事件a、b对应的Lamport时间戳，如果a发生在b之前(happened before)，记作 a→b，则有C(a)<C(b)，例如图1中有 C1→B1，那么 C(C1)<C(B1)。通过该定义，事件集中Lamport时间戳不等的事件可进行比较，我们获得事件的偏序关系(partial order)。**注意：如果C(a)<C(b)，并不能说明a→b，也就是说C(a)<C(b)是a→b的必要不充分条件**
+
+
+
+
+
+如果C(a)=C(b)，那a、b事件的顺序又是怎样的？值得注意的是当C(a)=C(b)的时候，它们肯定不是因果关系，所以它们之间的先后其实并不会影响结果，我们这里只需要给出一种确定的方式来定义它们之间的先后就能得到全序关系。**注意：Lamport逻辑时钟只保证因果关系（偏序）的正确性，不保证绝对时序的正确性。**
+
+
+
+
+
+我们来看下一个案例，
+
+向客户出售一张游戏票。涉及的组件包括一个 
+数据库，至少两个银行账户（一个是票贩子的账户，一个是买票人的账户），可能还有其他验证地址的系统，购票者），可能还有其他验证地址的系统。并安排将票交付给客户。
+
+这些系统需要编排成一个整体，以达到销售门票的目的。
+以避免出现以下情况： u 客户选择了一张票，而这恰好是最后一张票。
+恰好是最后一张票。但是，就在该客户能够付款之前，该票被另一个也选择了该票的客户购买。
+但是，就在客户能够支付该票之前，该票被另一个也选择了该票的客户购买了；或者在支付该票时，客户确认了支付交易，因此钱离开了他的账户，但是系统崩溃使钱无法到达他的账户。系统崩溃使资金无法到达卖方的账户。
+
+
+
+我们的**解决方法**有两种：1.集中的锁服务器（和互斥锁（mutex））
+
+​                                              2.2阶段提交算法
+
+
+
+### 2.4  集中化锁服务器（互斥化锁）Centralised Lock Server and Mutual Exclusion  Locks (Mutex)
+
+
+
+分为两个端,
+
+首先是**客户端**（client）
+
+- 向锁服务器发送一个**请求**，要求在指定的服务器发送一个请求，要求在一个给定的资源的互斥（mutex）请求。
+- 当回复回来时，它开始执行其关键进程。
+- 当它完成后，它发送一个消息来释放互斥mutex。
+
+
+
+
+
+然后是**锁服务器**（Locker Server）
+
+- 如果该资源是可用的，它将其标记为正在被客户端使用，并发送一个回复给说在锁已经被允许使用。
+  否则，它将请求放在队列中。
+- 当客户端释放互斥时，如果另一个客户想要这个资源（即，在队列中等待），则将该mutex传递给他们。
+  否则将其标记为可用。
+
+
+
+
+
+然后这种方法也有它的**局限性**：
+
+- 完全取决于Locker Server，所以被叫做 **Single Point failure** 
+- 尽管该解决方案能够保护需要被视为 "atomic"（不可分割）操作的事件序列，但它不能确保，如果事件序列的任何部分发生故障时系统的状态保持不变。
+
+
+
+
+
+
+
+### 2.5 两阶段提交算法    Two Phase Commit Algorithm
+
+
+
+- 两阶段提交算法确保一个的event的序列要么成功运行到完成，要么失败，这时整个系统被返回到 
+
+  其原始状态就像什么都没有发生过一样。换句话说 ，如果检测到一个故障，它允许已经发生的中间步骤可以被撤销（rollback），将事情返回到一个安全、合理的状态。
+
+
+
+- 一个（Coordinate Node）节点请求进行交流，并向所有参与节点发送一个请求 
+
+
+​       例如向节点C1发送 请求“从账户删除X英镑"，向节点C2发送请求”向账户增加X英镑"。
+
+
+
+- 所有参与者回答是否愿意并能够执该请求，并发送VOTE_COMMIT或 VOTE_ABORT. 。
+  - 他们记录自己的当前状态，然后执行交流
+  - 所有参与者记录他们的Vote
+- coordinator 看一下投票情况。如果每个人都投票Commit，然后再向所有人发GLOBAL_COMMIT，否则发送GLOBAL_ABORT。
+
+- 在收到coordinator的决定后，所有参与者都在当地记录决定。所有参与者都会在本地记录该决定，如果是ABORT，那么参与者将返回到之前的安全状态。参与者就回到他们之前的安全状态。
+
+
+
